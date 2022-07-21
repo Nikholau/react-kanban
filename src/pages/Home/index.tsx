@@ -1,13 +1,15 @@
 import Board from '@asseinfo/react-kanban';
 import '@asseinfo/react-kanban/dist/styles.css';
 
+import blank from '../../assets/blank.png';
+
 import './styles.scss';
 
 export const Home = () => {
   const board = {
     columns: [
       {
-        id: 1,
+        id: 1,      
         title: 'To Do',
         cards: [
           {
@@ -43,7 +45,13 @@ export const Home = () => {
   }
   return(
     <div className="container">
+      <h1 className='title'>Kanban do projeto</h1>
+      <div className="kanbanContainer">
       <Board initialBoard={board} />
+      </div>
+      <div className='image'>
+      <img src={blank} alt="decoration" />
+      </div>
     </div>
   );
 }

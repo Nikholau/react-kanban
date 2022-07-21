@@ -15,4 +15,9 @@ html {
   // REM = 1rem = 16px
 
   --backgroundDefault: #F5F5F5;
+
+  body {
+    margin: 30px;
+    background: var(--backgroundDefault);
+  }
 }

@@ -1,4 +1,37 @@
 .container{
   background-color: var(--backgroundDefault);
   height: 100vh;
+
+  .image{
+    display: flex;
+    justify-content: right;
+  }
+
+  img {
+    max-width: 692px;
+    max-height: 410px;
+  }
+}
+
+.title{
+  font-style: normal;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 44px;
+  letter-spacing: -0.02em;
+  color: #212529;
+}
+.kanbanContainer {
+  cursor: pointer;
+  .react-kanban-card__title{
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 25px;
+    letter-spacing: -0.02em;
+    // color: #FFFFFF;
+  }
+  .react-kanban-column{
+    width: 315px;
+  }
 }
