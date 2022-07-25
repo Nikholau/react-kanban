@@ -1,56 +1,57 @@
-import Board from '@asseinfo/react-kanban';
+import Board, { moveCard } from '@lourenci/react-kanban';
 import '@asseinfo/react-kanban/dist/styles.css';
-
-import blank from '../../assets/blank.png';
-
+import { useState } from 'react';
 import './styles.scss';
+import { initialBoard } from '../../helpers/data';
+
+interface ICard {
+  id: number;
+  title: string;
+  description?: string;
+}
+
+interface IColumns {
+  id: number;
+  title: string;
+  cards: ICard[];
+}
+
+export interface IBoard {
+  counter: number;
+  columns: IColumns[];
+}
 
 export const Home = () => {
-  const board = {
-    columns: [
-      {
-        id: 1,      
-        title: 'To Do',
-        cards: [
-          {
-            id: 1,
-            title: 'Add card',
-            description: 'Add capability to add a card in a column'
-          },
-        ]
-      },
-      {
-        id: 2,
-        title: 'In Progress',
-        cards: [
-          {
-            id: 2,
-            title: 'Drag-n-drop support',
-            description: 'Move a card between the columns'
-          },
-        ]
-      },
-      {
-        id: 3,
-        title: 'Done',
-        cards: [
-          {
-            id: 3,
-            title: 'Drag-n-drop support',
-            description: 'Move a card between the columns'
-          },
-        ]
-      }
-    ]
+  const [board, setBoard] = useState<IBoard>(initialBoard);
+
+  function onCardNew(newCard: any) {
+    const newCardLocal = { id: initialBoard.counter + 1, ...newCard };
+    initialBoard.counter = initialBoard.counter + 1;
+    setBoard(initialBoard);
+    return newCardLocal;
   }
+
+  function handleCardMove(_card: ICard, source: number, destination: number) {
+    const updatedBoard = moveCard(board, source, destination);
+    setBoard(updatedBoard);
+  }
+
+
   return(
     <div className="container">
       <h1 className='title'>Kanban do projeto</h1>
       <div className="kanbanContainer">
-      <Board initialBoard={board} />
-      </div>
-      <div className='image'>
-      <img src={blank} alt="decoration" />
+        <Board 
+          onCardDragEnd={handleCardMove}
+          initialBoard={board} 
+          allowRenameColumn
+          allowRemoveCard
+          allowAddCard={{ on: "Bottom" }}
+          onNewCardConfirm={onCardNew}
+          onCardNew={console.log} 
+          onCardRemove={console.log}
+          
+          />
       </div>
     </div>
   );
