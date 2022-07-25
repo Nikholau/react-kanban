@@ -1,4 +1,4 @@
-import Board, { moveCard } from '@asseinfo/react-kanban';
+import Board, { moveCard } from '@lourenci/react-kanban';
 import '@asseinfo/react-kanban/dist/styles.css';
 import { useState } from 'react';
 
@@ -68,14 +68,20 @@ export const Home = () => {
       }
     ]
   };
-
   const [board, setBoard] = useState(initialBoard);
+
+  function onCardNew(newCard: any) {
+    const newCardLocal = { id: initialBoard.counter + 1, ...newCard };
+    initialBoard.counter = initialBoard.counter + 1;
+    setBoard(initialBoard);
+    return newCardLocal;
+  }
 
   function handleCardMove(_card: any, source: any, destination: any) {
     const updatedBoard = moveCard(board, source, destination);
     setBoard(updatedBoard);
   }
- 
+
 
   return(
     <div className="container">
@@ -83,10 +89,12 @@ export const Home = () => {
       <div className="kanbanContainer">
         <Board 
           onCardDragEnd={handleCardMove}
-          disableColumnDrag
-        > 
-          {board}
-        </Board>
+          initialBoard={board} 
+          allowRenameColumn
+          allowAddCard={{ on: "Bottom" }}
+          onNewCardConfirm={onCardNew}
+          onCardNew={console.log} 
+          />
       </div>
     </div>
   );
